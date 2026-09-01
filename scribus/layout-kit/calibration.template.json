@@ -1,0 +1,44 @@
+{
+  "template": "TEMPLATE_NAME",
+  "paper": {
+    "size_mm": [210, 297],
+    "orientation": "portrait"
+  },
+  "margins_mm": {
+    "top": 14.111,
+    "right": 14.111,
+    "bottom": 14.111,
+    "left": 14.111
+  },
+  "calibration": {
+    "comment": "origin_page_mm = 作業原点 (0,0) のページ絶対座標。目視合わせ後に更新。",
+    "status": "draft",
+    "origin_page_mm": {
+      "x": 14.111,
+      "y": 14.111
+    },
+    "shift_applied_mm": {
+      "x": 0.0,
+      "y": 0.0
+    }
+  },
+  "scale": {
+    "anchor": "content_center",
+    "fit_mode": "uniform",
+    "default_percent": 100,
+    "last_percent": null,
+    "last_scale": null
+  },
+  "coordinate_mode": "margin_inner",
+  "layers": {
+    "profile": "form-standard-v1",
+    "required": ["背景", "罫線", "見出し"],
+    "optional": ["データ", "作業"],
+    "spec": "layers.standard.json"
+  },
+  "scribus": {
+    "sla_file": "TEMPLATE_NAME.sla",
+    "unit": "mm",
+    "font": "IPAexGothic Regular"
+  }
+}

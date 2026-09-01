@@ -1,0 +1,48 @@
+{
+  "mcpServers": {
+    "excel-automation": {
+      "command": "python",
+      "args": ["{{WORK}}\\ExcelVBAproject\\scripts\\mcp\\excel_mcp_server.py"],
+      "env": {
+        "PATH": "{{PYTHON313}};${PATH}"
+      }
+    },
+    "vba-skills": {
+      "command": "python",
+      "args": ["{{WORK}}\\ExcelVBAproject\\scripts\\mcp\\skills_mcp_server.py"],
+      "env": {
+        "PATH": "{{PYTHON313}};${PATH}"
+      }
+    },
+    "ExceLLM": {
+      "command": "python",
+      "args": ["-m", "excellm"],
+      "description": "Excel Live MCP - 開いているブックの操作・VBA実行・検索/書式/テーブル等"
+    },
+    "ExcelMcp": {
+      "command": "mcp-excel",
+      "args": [],
+      "env": {},
+      "description": "sbroenne ExcelMcp - Power Query/DAX/VBA/ピボット/グラフ等"
+    },
+    "pdf-forms": {
+      "command": "python",
+      "args": [
+        "-m",
+        "mcp_pdf_forms.server",
+        "{{PDF_FORMS_DOCS}}"
+      ],
+      "description": "PDF Forms MCP - フォーム抽出・一覧・ハイライト（docs パスは要変更）"
+    },
+    "scribus": {
+      "command": "{{PYTHON314_SCRIPTS}}\\scribus-mcp.exe",
+      "args": [],
+      "env": {
+        "SCRIBUS_BIN": "C:\\Program Files\\Scribus 1.7.3\\scribus.exe",
+        "SCRIBUS_LAYOUT_KIT": "{{MCP_ROOT}}\\scribus\\layout-kit",
+        "PATH": "{{PYTHON314}};${PATH}"
+      },
+      "description": "Scribus 1.7.x 帳票レイアウト。座標は各プロジェクトの *.calibration.json + layout-kit"
+    }
+  }
+}

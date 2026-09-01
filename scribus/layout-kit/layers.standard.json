@@ -1,0 +1,82 @@
+{
+  "profile": "form-standard-v1",
+  "description": "帳票レイアウト用 Scribus レイヤー標準（下→上の重ね順）",
+  "layers": [
+    {
+      "name": "背景",
+      "level": 0,
+      "printable": true,
+      "editable": true,
+      "visible": true,
+      "color": "#000000",
+      "purpose": "塗りつぶし矩形・セクション背景・ロゴ画像",
+      "object_kinds": ["bg_fill", "image", "watermark"]
+    },
+    {
+      "name": "罫線",
+      "level": 1,
+      "printable": true,
+      "editable": true,
+      "visible": true,
+      "color": "#ff0000",
+      "purpose": "表枠・罫線・区切り線・枠のみの矩形",
+      "object_kinds": ["line", "grid", "border_rect"]
+    },
+    {
+      "name": "見出し",
+      "level": 2,
+      "printable": true,
+      "editable": true,
+      "visible": true,
+      "color": "#00ff00",
+      "purpose": "固定ラベル・タイトル・列見出し・行番号など印刷物に残る静的文字",
+      "object_kinds": ["label", "title", "header", "footer", "row_number"]
+    },
+    {
+      "name": "データ",
+      "level": 3,
+      "printable": true,
+      "editable": true,
+      "visible": true,
+      "color": "#0000ff",
+      "purpose": "入力欄プレースホルダ・サンプル値（後工程 AcroForm の位置参考）",
+      "object_kinds": ["field", "placeholder", "sample_value"]
+    },
+    {
+      "name": "作業",
+      "level": 4,
+      "printable": false,
+      "editable": true,
+      "visible": true,
+      "color": "#ffff00",
+      "purpose": "余白ガイド・キャリブレーション・作業メモ（PDF には出さない）",
+      "object_kinds": ["guide", "annotation", "calibration"]
+    }
+  ],
+  "kind_to_layer": {
+    "bg_fill": "背景",
+    "image": "背景",
+    "watermark": "背景",
+    "line": "罫線",
+    "grid": "罫線",
+    "border_rect": "罫線",
+    "label": "見出し",
+    "title": "見出し",
+    "header": "見出し",
+    "footer": "見出し",
+    "row_number": "見出し",
+    "field": "データ",
+    "placeholder": "データ",
+    "sample_value": "データ",
+    "guide": "作業",
+    "annotation": "作業",
+    "calibration": "作業"
+  },
+  "mcp_workflow": [
+    "list_layers で現状確認",
+    "create_layer で不足分を追加（profile 順）",
+    "オブジェクト作成前に set_active_layer",
+    "既存オブジェクトの移動は send_to_layer",
+    "作業レイヤーは set_layer_printable(false) を確認"
+  ]
+}

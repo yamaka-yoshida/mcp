@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "root": "C:\\work\\MCP",
+  "description": "Cursor MCP 配布資源マニフェスト。各 PC で scripts/install.ps1 → apply-config.ps1 の順に実行。",
+  "servers": [
+    {
+      "id": "scribus",
+      "name": "Scribus 帳票レイアウト",
+      "type": "pip",
+      "package": "scribus-mcp",
+      "python": "3.14",
+      "bundled": [
+        "scribus/layout-kit",
+        "scribus/manual"
+      ],
+      "env": {
+        "SCRIBUS_BIN": "C:\\Program Files\\Scribus 1.7.3\\scribus.exe",
+        "SCRIBUS_LAYOUT_KIT": "{{MCP_ROOT}}\\scribus\\layout-kit"
+      },
+      "skill": "{{USERPROFILE}}\\.cursor\\skills\\scribus-mcp-layout",
+      "manual": "{{MCP_ROOT}}\\scribus\\manual\\index.html"
+    },
+    {
+      "id": "excel-automation",
+      "name": "Excel Automation（ローカルスクリプト）",
+      "type": "local",
+      "note": "ExcelVBAproject リポジトリのスクリプトを参照。MCP リポジトリ外のためパス要確認。",
+      "command": "python",
+      "args": ["{{WORK}}\\ExcelVBAproject\\scripts\\mcp\\excel_mcp_server.py"],
+      "python": "3.13"
+    },
+    {
+      "id": "vba-skills",
+      "name": "VBA Skills（ローカルスクリプト）",
+      "type": "local",
+      "command": "python",
+      "args": ["{{WORK}}\\ExcelVBAproject\\scripts\\mcp\\skills_mcp_server.py"],
+      "python": "3.13"
+    },
+    {
+      "id": "ExceLLM",
+      "name": "Excel Live MCP",
+      "type": "pip",
+      "package": "excellm",
+      "python": "3.13"
+    },
+    {
+      "id": "ExcelMcp",
+      "name": "ExcelMcp (sbroenne)",
+      "type": "pip-cli",
+      "package": "mcp-excel",
+      "command": "mcp-excel"
+    },
+    {
+      "id": "pdf-forms",
+      "name": "PDF Forms MCP",
+      "type": "pip",
+      "package": "mcp-pdf-forms",
+      "note": "args のドキュメントパスはプロジェクトごとに変更",
+      "args_extra": ["{{PDF_FORMS_DOCS}}"]
+    }
+  ]
+}

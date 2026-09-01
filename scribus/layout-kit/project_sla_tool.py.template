@@ -1,0 +1,37 @@
+# -*- coding: utf-8 -*-
+"""プロジェクト用 scribus-layout-kit ラッパー（テンプレート）。
+
+design/ にコピーし、CALIBRATION_JSON をプロジェクトの *.calibration.json に合わせる。
+"""
+from __future__ import annotations
+
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+# --- プロジェクトごとに変更 ---
+CALIBRATION_JSON = "TEMPLATE_NAME.calibration.json"
+# ---------------------------
+
+KIT = Path(os.environ.get("SCRIBUS_LAYOUT_KIT", r"C:\work\MCP\scribus\layout-kit"))
+CAL = Path(__file__).with_name(CALIBRATION_JSON)
+TOOL = KIT / "sla_tool.py"
+
+
+def main() -> int:
+    args = list(sys.argv[1:])
+    if args and args[0] != "init" and "--calibration" not in args:
+        args = [args[0], "--calibration", str(CAL), *args[1:]]
+    if not TOOL.is_file():
+        print("SCRIBUS_LAYOUT_KIT not found:", KIT, file=sys.stderr)
+        return 1
+    if args and args[0] != "init" and not CAL.is_file():
+        print("calibration not found:", CAL, file=sys.stderr)
+        return 1
+    proc = subprocess.run([sys.executable, str(TOOL), *args], check=False)
+    return proc.returncode
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
