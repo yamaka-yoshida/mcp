@@ -263,6 +263,45 @@
     }
     .layer-bar .tag { font-size: .7rem; font-weight: 400; opacity: .8; }
 
+    /* Command / prompt reference */
+    .ref-category { margin: 2rem 0 1rem; font-size: 1rem; color: #c5d4e8; border-left: 3px solid var(--accent); padding-left: .75rem; }
+    .cmd-table { font-size: .85rem; }
+    .cmd-table code { font-size: .8em; }
+    .prompt-grid { display: grid; gap: .75rem; margin: 1rem 0; }
+    .prompt-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.15rem;
+      position: relative;
+    }
+    .prompt-card .label {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--accent-2);
+      margin-bottom: .4rem;
+      font-weight: 600;
+    }
+    .prompt-card .text {
+      font-size: .9rem;
+      color: #dce6f2;
+      line-height: 1.5;
+    }
+    .pill {
+      display: inline-block;
+      font-size: .65rem;
+      padding: .15em .5em;
+      border-radius: 4px;
+      background: rgba(59,158,255,.15);
+      color: #93c5fd;
+      margin-right: .35rem;
+      vertical-align: middle;
+    }
+    .pill-cli { background: rgba(251,191,36,.15); color: #fde68a; }
+    .pill-mcp { background: rgba(110,231,183,.15); color: #6ee7b7; }
+    .pill-chat { background: rgba(168,85,247,.15); color: #d8b4fe; }
+
     footer {
       text-align: center;
       padding: 2rem;
@@ -292,6 +331,9 @@
       <a href="#mcp">MCP の使い方</a>
       <a href="#skills">Skills の使い方</a>
       <a href="#kit">Layout Kit CLI</a>
+      <a href="#cli-commands">コマンド一覧</a>
+      <a href="#mcp-tools">MCP ツール一覧</a>
+      <a href="#prompts">Cursor 指示例</a>
       <a href="#layers">レイヤー標準</a>
       <a href="#workflow">作業フロー</a>
       <a href="#calibration">座標キャリブレーション</a>
@@ -406,7 +448,7 @@
       "command": "C:\\Users\\...\\Python314\\Scripts\\scribus-mcp.exe",
       "env": {
         "SCRIBUS_BIN": "C:\\Program Files\\Scribus 1.7.3\\scribus.exe",
-        "SCRIBUS_LAYOUT_KIT": "C:\\work\\RustProject\\Tool\\scribus-layout-kit"
+        "SCRIBUS_LAYOUT_KIT": "C:\\work\\MCP\\scribus\\layout-kit"
       }
     }
   }
@@ -694,6 +736,176 @@ python sla_tool.py layers
 python sla_tool.py fit --percent 98 --dry-run</code></pre>
     </section>
 
+    <!-- CLI Commands Reference -->
+    <section id="cli-commands">
+      <h2>コマンド一覧</h2>
+      <p>ターミナルでそのまま実行できるコマンドです。プロジェクトの <code>design/</code> で作業する想定が多いです。</p>
+
+      <h3 class="ref-category"><span class="pill pill-cli">SETUP</span> MCP 配布ハブ（初回・新 PC）</h3>
+      <table class="cmd-table">
+        <thead><tr><th>コマンド</th><th>説明</th></tr></thead>
+        <tbody>
+          <tr><td><code>git clone https://github.com/yamaka-yoshida/mcp.git C:\work\MCP</code></td><td>配布リポジトリを取得</td></tr>
+          <tr><td><code>C:\work\MCP\scripts\install.ps1</code></td><td>pip パッケージ一括インストール（scribus-mcp 等）</td></tr>
+          <tr><td><code>C:\work\MCP\scripts\apply-config.ps1</code></td><td><code>~/.cursor/mcp.json</code> をテンプレートから生成</td></tr>
+          <tr><td><code>scribus-mcp --print-bridge-path</code></td><td>interactive 用 bridge .spy のパス表示</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="ref-category"><span class="pill pill-cli">KIT</span> sla_tool.py（プロジェクト design/ から）</h3>
+      <table class="cmd-table">
+        <thead><tr><th>コマンド</th><th>説明</th></tr></thead>
+        <tbody>
+          <tr><td><code>python sla_tool.py init --name 帳票名 --output 帳票名.calibration.json</code></td><td>新規 calibration 作成</td></tr>
+          <tr><td><code>python sla_tool.py info</code></td><td>コンテンツ bbox・余白矩形を JSON 表示</td></tr>
+          <tr><td><code>python sla_tool.py layers</code></td><td>レイヤー標準 form-standard-v1 と照合</td></tr>
+          <tr><td><code>python sla_tool.py shift --dx-mm 35</code></td><td>全オブジェクトを X 方向に 35mm シフト</td></tr>
+          <tr><td><code>python sla_tool.py shift --dy-mm 2</code></td><td>Y 方向シフト</td></tr>
+          <tr><td><code>python sla_tool.py fit --percent 98 --dry-run</code></td><td>スケール倍率の確認のみ（書き込まない）</td></tr>
+          <tr><td><code>python sla_tool.py fit --percent 98</code></td><td>余白内に uniform スケールを適用</td></tr>
+          <tr><td><code>python sla_tool.py normalize --remove-headless-offset</code></td><td>A4 修正・ガイド・headless オフセット除去</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:.85rem;color:var(--muted)">Kit 直叩き: <code>python C:\work\MCP\scribus\layout-kit\sla_tool.py info --calibration design\帳票.calibration.json</code></p>
+
+      <h3 class="ref-category"><span class="pill pill-cli">HEADLESS</span> Scribus 一括生成</h3>
+      <table class="cmd-table">
+        <thead><tr><th>コマンド</th><th>説明</th></tr></thead>
+        <tbody>
+          <tr><td><code>&amp; "C:\Program Files\Scribus 1.7.3\scribus.exe" -g -py build_*.py</code></td><td>headless でレイアウトスクリプト実行（GUI は閉じる）</td></tr>
+          <tr><td><code>scribus.exe -g -py script.py</code></td><td>任意の Scribus Python スクリプト</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="ref-category"><span class="pill pill-cli">ENV</span> 環境変数</h3>
+      <table class="cmd-table">
+        <thead><tr><th>変数</th><th>既定値の例</th></tr></thead>
+        <tbody>
+          <tr><td><code>SCRIBUS_LAYOUT_KIT</code></td><td><code>C:\work\MCP\scribus\layout-kit</code></td></tr>
+          <tr><td><code>SCRIBUS_BIN</code></td><td><code>C:\Program Files\Scribus 1.7.3\scribus.exe</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- MCP Tools Reference -->
+    <section id="mcp-tools">
+      <h2>MCP ツール一覧</h2>
+      <p>Cursor チャットからエージェントが呼ぶ <code>scribus</code> MCP のツールです。帳票レイアウトでよく使うものをカテゴリ別に掲載（全 ~125 ツール中）。</p>
+
+      <h3 class="ref-category"><span class="pill pill-mcp">DOC</span> ドキュメント</h3>
+      <table class="cmd-table">
+        <thead><tr><th>ツール</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td><code>open_document</code> / <code>close_document</code></td><td>.sla の開閉</td></tr>
+          <tr><td><code>save_document</code> / <code>save_document_as</code></td><td>保存</td></tr>
+          <tr><td><code>get_document_info</code></td><td>ページ数・サイズなど</td></tr>
+          <tr><td><code>create_document</code></td><td>新規（pt + PAPER_A4 推奨）</td></tr>
+          <tr><td><code>export_pdf</code></td><td>PDF 書き出し</td></tr>
+          <tr><td><code>render_page_to_image</code></td><td>プレビュー画像生成</td></tr>
+          <tr><td><code>get_scribus_version</code></td><td>1.7 機能の可否確認</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="ref-category"><span class="pill pill-mcp">LAYER</span> レイヤー</h3>
+      <table class="cmd-table">
+        <thead><tr><th>ツール</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td><code>list_layers</code></td><td>レイヤー一覧</td></tr>
+          <tr><td><code>create_layer</code> / <code>delete_layer</code></td><td>追加・削除</td></tr>
+          <tr><td><code>set_active_layer</code></td><td>作成前にアクティブ切替（必須）</td></tr>
+          <tr><td><code>send_to_layer</code></td><td>既存オブジェクトの移動</td></tr>
+          <tr><td><code>set_layer_visible</code> / <code>set_layer_printable</code></td><td>表示・印刷可否（作業レイヤーは印刷オフ）</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="ref-category"><span class="pill pill-mcp">SHAPE</span> 図形・罫線</h3>
+      <table class="cmd-table">
+        <thead><tr><th>ツール</th><th>用途</th><th>レイヤー目安</th></tr></thead>
+        <tbody>
+          <tr><td><code>create_rectangle</code></td><td>矩形（背景色・枠）</td><td>背景 / 罫線</td></tr>
+          <tr><td><code>create_line</code></td><td>罫線</td><td>罫線</td></tr>
+          <tr><td><code>set_fill_color</code> / <code>set_line_color</code></td><td>塗り・線色</td><td>—</td></tr>
+          <tr><td><code>set_line_width</code></td><td>線幅</td><td>—</td></tr>
+          <tr><td><code>move_object</code> / <code>resize_object</code></td><td>位置・サイズ調整</td><td>—</td></tr>
+          <tr><td><code>delete_object</code></td><td>削除</td><td>—</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="ref-category"><span class="pill pill-mcp">TEXT</span> テキスト</h3>
+      <table class="cmd-table">
+        <thead><tr><th>ツール</th><th>用途</th><th>レイヤー目安</th></tr></thead>
+        <tbody>
+          <tr><td><code>create_text_frame</code></td><td>テキストフレーム作成</td><td>見出し / データ</td></tr>
+          <tr><td><code>set_text</code> / <code>append_text</code></td><td>文字列設定</td><td>—</td></tr>
+          <tr><td><code>set_font</code> / <code>set_font_size</code></td><td>フォント（IPAexGothic 等）</td><td>—</td></tr>
+          <tr><td><code>set_text_alignment</code></td><td>揃え（左・中央・右）</td><td>—</td></tr>
+          <tr><td><code>find_and_replace_text</code></td><td>一括置換</td><td>—</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="ref-category"><span class="pill pill-mcp">GUIDE</span> ガイド・ページ</h3>
+      <table class="cmd-table">
+        <thead><tr><th>ツール</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td><code>set_horizontal_guides</code> / <code>set_vertical_guides</code></td><td>ガイド線</td></tr>
+          <tr><td><code>set_page_margins</code> / <code>get_page_size</code></td><td>余白・ページサイズ</td></tr>
+          <tr><td><code>list_page_objects</code> / <code>find_objects</code></td><td>オブジェクト列挙（layer フィルタは非対応）</td></tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-info">
+        <strong>mode パラメータ</strong>
+        各ツールは既定 <code>mode=auto</code>。GUI 編集時は interactive、一括処理時は headless に自動切替。明示する場合は <code>mode=interactive</code> または <code>mode=headless</code>。
+      </div>
+    </section>
+
+    <!-- Cursor Prompts -->
+    <section id="prompts">
+      <h2>Cursor への指示例</h2>
+      <p>チャットにコピー＆ペーストして使える依頼文です。プロジェクト名・ファイル名は環境に合わせて置き換えてください。</p>
+
+      <h3 class="ref-category"><span class="pill pill-chat">OPEN</span> 開く・保存・確認</h3>
+      <div class="prompt-grid">
+        <div class="prompt-card"><div class="label">sla を開く</div><div class="text">運行指示書.sla を Scribus で開いて、現在のレイヤー一覧を表示して。</div></div>
+        <div class="prompt-card"><div class="label">プレビュー</div><div class="text">開いている .sla の 1 ページ目を render_page_to_image で画像化して、レイアウトを確認して。</div></div>
+        <div class="prompt-card"><div class="label">保存</div><div class="text">編集内容を save_document で保存して。</div></div>
+        <div class="prompt-card"><div class="label">PDF 出力</div><div class="text">現在のドキュメントを export_pdf で work フォルダに PDF 書き出しして。</div></div>
+      </div>
+
+      <h3 class="ref-category"><span class="pill pill-chat">EDIT</span> レイアウト編集</h3>
+      <div class="prompt-grid">
+        <div class="prompt-card"><div class="label">罫線追加</div><div class="text">レイヤー「罫線」をアクティブにして、作業原点から右端まで Y=50mm の水平線を 0.5pt で引いて。</div></div>
+        <div class="prompt-card"><div class="label">ラベル追加</div><div class="text">レイヤー「見出し」に「運転日」ラベルを (0, 20) mm、幅 18mm、IPAexGothic 9pt で置いて。</div></div>
+        <div class="prompt-card"><div class="label">表ヘッダー</div><div class="text">表のヘッダー行の高さを 8mm に変更して。列見出しは見出しレイヤーのまま。</div></div>
+        <div class="prompt-card"><div class="label">背景色</div><div class="text">セクション見出し帯を背景レイヤーで section_bg 色の矩形にして。</div></div>
+        <div class="prompt-card"><div class="label">レイヤー移動</div><div class="text">誤って見出しレイヤーに入った罫線を、send_to_layer で「罫線」に移して。</div></div>
+      </div>
+
+      <h3 class="ref-category"><span class="pill pill-chat">CAL</span> キャリブレーション・CLI</h3>
+      <div class="prompt-grid">
+        <div class="prompt-card"><div class="label">bbox 確認</div><div class="text">design フォルダで python sla_tool.py info を実行して、余白との関係を説明して。</div></div>
+        <div class="prompt-card"><div class="label">ずれ補正</div><div class="text">calibration.json を読んで、全体が左に 2mm ずれているので sla_tool.py shift --dx-mm 2 を実行して。</div></div>
+        <div class="prompt-card"><div class="label">スケール確認</div><div class="text">sla_tool.py fit --percent 95 --dry-run で余白フィットの倍率を確認して、結果を教えて。</div></div>
+        <div class="prompt-card"><div class="label">レイヤー照合</div><div class="text">python sla_tool.py layers を実行して、form-standard-v1 との差分を報告して。</div></div>
+        <div class="prompt-card"><div class="label">headless 後処理</div><div class="text">headless 生成後なので sla_tool.py normalize --remove-headless-offset を実行してから layers で確認して。</div></div>
+      </div>
+
+      <h3 class="ref-category"><span class="pill pill-chat">NEW</span> 新規テンプレート</h3>
+      <div class="prompt-grid">
+        <div class="prompt-card"><div class="label">calibration 初期化</div><div class="text">新帳票「納品書」用に sla_tool.py init で calibration を design に作成し、project_sla_tool.py.template からラッパーも用意して。</div></div>
+        <div class="prompt-card"><div class="label">レイヤー準備</div><div class="text">form-standard-v1 の 5 レイヤー（背景・罫線・見出し・データ・作業）を create_layer で用意して。作業レイヤーは印刷オフに。</div></div>
+        <div class="prompt-card"><div class="label">A4 新規</div><div class="text">UNIT_POINTS + PAPER_A4 で A4 縦・余白 14.111mm の新規ドキュメントを作って。mm だけの newDocument は使わないで。</div></div>
+        <div class="prompt-card"><div class="label">Skill 追加</div><div class="text">.cursor/skills/scribus-納品書-design/SKILL.md を scribus-unko-design を参考に作成して。</div></div>
+      </div>
+
+      <h3 class="ref-category"><span class="pill pill-chat">CHECK</span> 検証・トラブル時</h3>
+      <div class="prompt-grid">
+        <div class="prompt-card"><div class="label">MCP 接続確認</div><div class="text">scribus MCP で get_scribus_version と list_layers が動くか確認して。動かなければ bridge 手順を案内して。</div></div>
+        <div class="prompt-card"><div class="label">座標の読み方</div><div class="text">運行指示書.calibration.json の origin_page_mm を読んで、作業座標 (10, 5) mm のページ絶対座標を計算して。</div></div>
+        <div class="prompt-card"><div class="label">ページ幅異常</div><div class="text">ページ幅が A4 の 3 倍になっている。normalize とページ作成方法を確認して直して。</div></div>
+      </div>
+    </section>
+
     <!-- Troubleshoot -->
     <section id="troubleshoot">
       <h2>トラブルシューティング</h2>
@@ -740,8 +952,9 @@ python sla_tool.py fit --percent 98 --dry-run</code></pre>
 <footer>
   <p>全プロジェクト共通マニュアル · <code>C:\work\MCP\scribus\manual\</code> · 最終更新 2026-09-01</p>
   <p style="margin-top:.5rem">
-    関連: <a href="https://github.com/caewa/scribus-mcp">scribus-mcp</a> ·
-    Layout Kit: <code>Tool/scribus-layout-kit</code>
+    関連: <a href="https://github.com/yamaka-yoshida/mcp">yamaka-yoshida/mcp</a> ·
+    <a href="https://github.com/caewa/scribus-mcp">scribus-mcp</a> ·
+    Layout Kit: <code>C:\work\MCP\scribus\layout-kit</code>
   </p>
 </footer>
 

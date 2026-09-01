@@ -8,6 +8,13 @@
 C:\work\MCP\scribus\manual\index.html
 ```
 
+## 主なセクション
+
+- コマンド一覧（setup / `sla_tool` / headless）
+- MCP ツール一覧（カテゴリ別）
+- Cursor への指示例（コピー用プロンプト集）
+- レイヤー標準・座標キャリブレーション・トラブルシューティング
+
 ## 関連
 
 | 種別 | パス |
