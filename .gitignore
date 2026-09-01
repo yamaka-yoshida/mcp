@@ -15,6 +15,5 @@ configs/mcp.local.json
 .env
 *.env
 
-# 一時ファイル
-*.log
-*.tmp
+# 一時ツール（ポータブル gh 等）
+.tools/
