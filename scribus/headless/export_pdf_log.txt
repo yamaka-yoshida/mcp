@@ -1,0 +1,3 @@
+OK
+C:\work\RustProject\運転日報印刷ツール\PDFフォーム\design\正本\運行指示書.sla
+C:\work\RustProject\運転日報印刷ツール\PDFフォーム\work\20260904_from_sla.pdf

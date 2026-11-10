@@ -1,0 +1,5 @@
+{
+  "design_dir": "c:\\work\\RustProject\\運転日報印刷ツール\\PDFフォーム\\design",
+  "build_script": "build/build_unten_shijisho_layout.py",
+  "sla_name": "正本/運行指示書.sla"
+}

@@ -1,0 +1,26 @@
+---
+description: {{PROJECT_SLUG}} の MCP スコープ（他製品用 MCP を使わない）
+alwaysApply: true
+---
+
+# MCP — {{PROJECT_TITLE}}
+
+正本: `C:\work\docs\developer\cursor-mcp-project-policy.md`  
+ひな型: `C:\work\MCP\configs\project.cursor.mcp.json.template`
+
+## 設定
+
+- 本 repo: [`.cursor/mcp.json`](../mcp.json) — {{MCP_JSON_POLICY}}
+- グローバル `~/.cursor/mcp.json` の {{GLOBAL_SERVERS_TO_AVOID}} は **本リポジトリでは原則使わない**。
+
+## エージェント
+
+| 利用する | 利用しない（他プロジェクト向け） |
+|----------|----------------------------------|
+{{AGENT_TOOL_ROWS}}
+
+{{SCOPE_BOUNDARY_NOTES}}
+
+## 追加するとき
+
+{{PROJECT_SLUG}} 専用 MCP が必要になったら **この repo の `mcp.json` のみ**に追加。グローバルを肥大化させない。秘密情報は `envFile` + `.env`（`.env.example` のみコミット）。

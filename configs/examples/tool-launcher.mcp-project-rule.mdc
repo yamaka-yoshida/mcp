@@ -1,0 +1,27 @@
+---
+description: tool-launcher の MCP スコープ（他製品用 MCP を使わない）
+alwaysApply: true
+---
+
+# MCP — tool-launcher
+
+正本: `C:\work\docs\developer\cursor-mcp-project-policy.md`
+
+## 設定
+
+- 本 repo: [`.cursor/mcp.json`](../mcp.json) — **製品専用 MCP は登録しない**（空）。
+- グローバル `~/.cursor/mcp.json` の scribus / dart / penpot は **本リポジトリでは原則使わない**。
+
+## エージェント
+
+| 利用する | 利用しない（他プロジェクト向け） |
+|----------|----------------------------------|
+| シェル（`cargo` / `pnpm` / `build-*.bat` / `assemble_*.py`） | excel-vba-gateway |
+| 必要時 **cursor-ide-browser**（`tool-launcher-settings` の画面確認） | kintone / pdf-forms |
+| | Scribus / Penpot / dart MCP |
+
+APA 業務 EXE のビルド・検証は **APA リポジトリ**で行う。ここではランチャー・joint-hub・TOML・配布資源のみ。
+
+## 追加するとき
+
+joint 専用 MCP 等ができたら **この repo の `mcp.json` のみ**に追加。グローバルを肥大化させない。秘密情報は `envFile` + `.env`（`.env.example` のみコミット）。

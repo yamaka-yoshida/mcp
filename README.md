@@ -18,7 +18,12 @@ GitHub（または Cursor ホスト）にプッシュしておけば、自宅 PC
 C:\work\MCP\
 ├── manifest.json           # 各 MCP の一覧・依存関係
 ├── configs\
-│   └── mcp.json.template   # ~/.cursor/mcp.json の雛形
+│   ├── README.md                              # プロジェクト MCP ひな型の使い方
+│   ├── project.cursor.mcp.json.template         # 製品 .cursor/mcp.json（空）
+│   ├── project.cursor.mcp.with-servers.example.json
+│   ├── mcp-project-rule.mdc.template            # MCP スコープ用 .mdc
+│   ├── examples\tool-launcher.*                 # 参照実装の写し
+│   └── mcp.json.template                        # ~/.cursor/mcp.json（グローバル）
 ├── scripts\
 │   ├── install.ps1         # pip パッケージ一括インストール
 │   └── apply-config.ps1    # mcp.json を生成・配置

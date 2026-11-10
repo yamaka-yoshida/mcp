@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "example-remote-docs": {
+      "url": "https://mcp.cybozu.dev/mcp",
+      "description": "リモート MCP の例（認証不要 URL のみ）"
+    },
+    "example-stdio-envfile": {
+      "command": "npx",
+      "args": ["-y", "@kintone/mcp-server"],
+      "envFile": "${workspaceFolder}/.env",
+      "description": "秘密は .env。コミットするのは .env.example のみ"
+    },
+    "example-stdio-workspace-path": {
+      "command": "python",
+      "args": [
+        "-m",
+        "mcp_pdf_forms.server",
+        "${workspaceFolder}/docs"
+      ],
+      "description": "プロジェクト配下パスは ${workspaceFolder} を使う"
+    },
+    "example-stdio-env-interp": {
+      "command": "${userHome}/AppData/Local/Programs/Python/Python314/python.exe",
+      "args": ["${workspaceFolder}/scripts/run_mcp.py"],
+      "env": {
+        "API_KEY": "${env:MY_API_KEY}"
+      },
+      "description": "マシン依存は ${userHome} / ${env:NAME}"
+    }
+  }
+}
